@@ -3,7 +3,7 @@ class Card
     new(suit: suit, rank: rank)
   end
   private_class_method :new
-  
+
   def initialize(suit:, rank:)
     @suit = suit
     @rank = case rank
@@ -13,25 +13,45 @@ class Card
       else rank
     end
   end
-  
+
   def suit
     @suit
   end
-  
+
   def rank
     @rank
   end
-  
+
   def ==(other)
     rank == other.rank && suit == other.suit
   end
-  
+
   def hash
     [rank, suit].hash
   end
-  
+
   def eql?(other)
     self == other
   end
-end 
 
+  def to_s
+    id = if rank > 10
+      {
+        11 => "J",
+        12 => "Q",
+        13 => "K"
+      }.fetch(rank)
+    else
+      rank.to_s
+    end
+
+    s = {
+      hearts: "♡ ",
+      spades: "♤ ",
+      diamonds: "♢ ",
+      clubs: "♧ ",
+    }
+
+    "#{id.upcase}#{s.fetch(suit)}"
+  end
+end
